@@ -15,10 +15,13 @@ $page->addCSS( 'assets/style.css' );
 <main>
     <article class="fb-brackets">
         <section>
+            <p>現在テストモードです。メールは送信されておらず、メールの内容はこの画面でのみ確認できます。</p>
+        </section>
+        <section>
             <h2>APP URL</h2>
             <p><?php echo APP_URL; ?></p>
             <h2>リダイレクト先</h2>
-            <p><?php echo $page_thanks; ?></p>
+            <p><a href="<?php echo $page_thanks; ?>"><?php echo $page_thanks; ?></a></p>
         </section>
         <section>
             <h2>メール（管理者へ送信）</h2>

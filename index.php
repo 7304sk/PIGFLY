@@ -32,11 +32,11 @@ $_POST = isset( $_POST ) ? Sanitize::clearNull( $_POST ) : array();
 $input = new Input( $_POST );
 $input->check();
 if( $input->err ) {
-    Display::view( APP_PATH . 'page/error.php' );
+    Display::view( APP_PATH . 'view/error.php' );
 } else {
     if( $mode_confirm && ! $input->confirmed ) {
         $_SESSION[ 'file' ] = $input->file;
-        Display::view( APP_PATH . 'page/confirm.php' );
+        Display::view( APP_PATH . 'view/confirm.php' );
     } else {
         /** send mail */
         mb_language('Japanese');
@@ -51,7 +51,7 @@ if( $input->err ) {
         }
         /** Finish */
         if( $mode_test ) {
-            Display::view( APP_PATH . 'page/result.php' );
+            Display::view( APP_PATH . 'view/result.php' );
         } else {
             $to_user->send();
             $to_admin->send();
