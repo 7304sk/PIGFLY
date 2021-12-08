@@ -26,6 +26,7 @@ class Display {
         $page_title = $this->title;
         $css_links = $this->css;
         $js_links = $this->js;
+        $favicon = $this->favicon;
         require_once APP_PATH . 'includes/template-parts/header.php';
     }
 
