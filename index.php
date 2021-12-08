@@ -44,9 +44,7 @@ if( $input->err ) {
         $mail_facade = new MailFacade;
         $send_file = ( ! empty( $_SESSION[ 'file' ] ) ) ? $_SESSION[ 'file' ] : ( ( ! empty( $input->file ) ) ? $input->file : array() );
         $to_user = new Mail( $admin_email, $input->val[ $user_email ], $input->val, $mail_facade->to_user );
-        $to_user->send();
         $to_admin = new Mail( $input->val[ $user_email ], $admin_email, $input->val, $mail_facade->to_admin, $send_file );
-        $to_admin->send();
         if( session_status() == PHP_SESSION_ACTIVE ) {
             $_SESSION = array();
             session_destroy();
@@ -55,6 +53,8 @@ if( $input->err ) {
         if( $mode_test ) {
             Display::view( APP_PATH . 'page/result.php' );
         } else {
+            $to_user->send();
+            $to_admin->send();
             header("location: ".$page_thanks, true, 301);
             exit;
         }

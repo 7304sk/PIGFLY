@@ -1,9 +1,8 @@
 <?php
 /** エラー画面 */
 $page = new Display( '入力エラー | ' . $form_name );
-$page->setCSS( 'css/radix.min.css' );
-$page->setCSS( 'css/style.css' );
-$page->setJS( 'js/radix.min.js' );
+$page->setFavicon( 'assets/favicon.ico' );
+$page->addCSS( 'assets/style.css' );
 ?>
 
 <?php $page->getHeader(); ?>

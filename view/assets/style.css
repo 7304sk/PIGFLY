@@ -1,0 +1,483 @@
+@charset "UTF-8";
+/* reset default style */
+*:where(:not(iframe, canvas, img, svg, video):not(svg *)) {
+    all: unset;
+    display: revert;
+}
+
+*,
+*:before,
+*:after {
+    box-sizing: border-box;
+}
+
+[hidden] {
+    display: none !important
+}
+
+/* font setting */
+html {
+    color: var(--textColor);
+    font-family: 'Noto Sans JP', Arial, "Hiragino Kaku Gothic Pro", Meiryo, "MS PGothic", sans-serif;
+    font-size: var(--fontSize);
+    font-weight: 400;
+    line-height: 1.4
+}
+
+p {
+    line-height: 1.8
+}
+
+/* fix display height */
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    -moz-text-size-adjust: 100%;
+    text-size-adjust: 100%
+}
+
+main {
+    display: block;
+    flex-grow: 1
+}
+
+/* formatting init style */
+a {
+    color: var(--linkColor);
+    text-decoration: none
+}
+
+a:hover {
+    text-decoration: underline
+}
+
+ul,
+ol {
+    list-style-type: none
+}
+
+ul.disc,
+ol.disc {
+    padding-left: 1.5em;
+    list-style-type: disc
+}
+
+ul.circle,
+ol.circle {
+    padding-left: 1.5em;
+    list-style-type: circle
+}
+
+ul.square,
+ol.square {
+    padding-left: 1.5em;
+    list-style-type: square
+}
+
+ul.decimal,
+ol.decimal {
+    padding-left: 1.5em;
+    list-style-type: decimal
+}
+
+ul.decimal-lz,
+ol.decimal-lz {
+    padding-left: 2.5em;
+    list-style-type: decimal-leading-zero
+}
+
+blockquote,
+q {
+    quotes: none
+}
+
+blockquote:before,
+blockquote:after,
+q:before,
+q:after {
+    content: '';
+    content: none
+}
+
+sup {
+    font-size: 0.5em;
+    vertical-align: super
+}
+
+sub {
+    font-size: 0.5em;
+    vertical-align: sub
+}
+
+strong {
+    font-weight: bolder
+}
+
+em {
+    font-weight: 700
+}
+
+table {
+    width: max-content;
+    border-collapse: collapse;
+    border-spacing: 0
+}
+
+button {
+    cursor: pointer
+}
+
+section {
+    margin-bottom: var(--gap)
+}
+
+img {
+    display: inline-block;
+    object-fit: cover;
+    max-width: 100%;
+    flex-shrink: 0
+}
+
+img.contain {
+    object-fit: contain
+}
+
+/* margin-bottom settings */
+main h1 {
+    margin-bottom: var(--gutter)
+}
+
+main h2 {
+    margin-bottom: calc(var(--gutter) - .3rem)
+}
+
+main h3 {
+    margin-bottom: calc(var(--gutter) - .5rem)
+}
+
+main h4 {
+    margin-bottom: calc(var(--gutter) - .7rem)
+}
+
+main h5 {
+    margin-bottom: calc(var(--gutter) - .7rem)
+}
+
+main h6 {
+    margin-bottom: calc(var(--gutter) - .7rem)
+}
+
+main ul {
+    padding-left: 1.5em;
+    margin-bottom: var(--gutter);
+    list-style-type: disc
+}
+
+main ol {
+    padding-left: 1.5em;
+    margin-bottom: var(--gutter);
+    list-style-type: decimal
+}
+
+main table,
+main dl {
+    margin-bottom: var(--gutter)
+}
+
+main p,
+.mb {
+    margin-bottom: var(--gutter)
+}
+
+.mb0 {
+    margin-bottom: 0
+}
+
+.mb_ {
+    margin-bottom: .5rem
+}
+
+.mb1 {
+    margin-bottom: 1rem
+}
+
+.mb1_ {
+    margin-bottom: 1.5rem
+}
+
+.mb2 {
+    margin-bottom: 2rem
+}
+
+.mb2_ {
+    margin-bottom: 2.5rem
+}
+
+.mb3 {
+    margin-bottom: 3rem
+}
+
+/* unique style */
+.clearfix:after {
+    content: " ";
+    display: block;
+    clear: both
+}
+
+.centering {
+    display: block;
+    margin: auto;
+    width: 100%;
+    max-width: var(--contentWidth);
+    position: relative
+}
+
+.fb-brackets {
+    display: grid;
+    grid-template-columns: var(--spacing) 1fr min(calc(100% - 2 * var(--spacing)), var(--contentWidth)) 1fr var(--spacing);
+    width: 100%;
+}
+
+.fb-brackets>*:not(.full-bleed) {
+    grid-column: 3;
+    width: 100%
+}
+
+.fb-brackets>.full-bleed {
+    grid-column: 1/6;
+    width: 100%
+}
+
+.hide {
+    visibility: hidden;
+    opacity: 0
+}
+
+.visible {
+    visibility: visible;
+    opacity: 1
+}
+
+.modal-visible:not(.rdx-modal-target) {
+    display: none !important
+}
+
+.none {
+    display: none !important
+}
+
+.fill-parent {
+    display: block;
+    width: 100%;
+    height: 100%
+}
+
+.text-center {
+    text-align: center
+}
+
+.text-right {
+    text-align: right
+}
+
+.text-left {
+    text-align: left
+}
+
+.text-unit {
+    display: inline-block;
+    vertical-align: top
+}
+
+.text-clear {
+    font: 0/0 a;
+    color: transparent;
+    text-shadow: none;
+    white-space: nowrap
+}
+
+/*********************************
+preset variables
+*********************************/
+:root {
+    --fontSize: 16px;
+    --linkColor: #3562a0;
+    --textColor: #333;
+    /* color preset */
+    --mainColor: #0F547D;
+    --mainLightColor: #e4f2fa;
+    --subColor: #00a3a3;
+    --subLightColor: #19bebe;
+    /* width preset */
+    --gutter: 1.3rem;
+    --gap: 1.5rem;
+    --spacing: 1rem;
+    --contentWidth: 1200px;
+}
+
+/*************************************
+* START header
+*************************************/
+header {
+    background: var(--mainColor);
+    padding: 3rem 1rem;
+    text-align: center;
+}
+
+header h1 {
+    color: #fff;
+    font-size: 2rem;
+    font-weight: 700;
+}
+
+header p {
+    color: var(--subColor);
+    font-size: 1.3rem;
+}
+
+/*************************************
+* END header START main
+*************************************/
+main {
+    padding: 2rem 0;
+}
+
+pre {
+    white-space: pre-wrap;
+}
+
+main h2 {
+    color: var(--mainColor);
+    font-size: 1.3rem;
+    font-weight: 700;
+}
+
+.error-box {
+    padding: 1.5rem;
+    border: 1px solid #ccc;
+    border-radius: 1rem;
+}
+
+.error-box p {
+    margin-bottom: 0;
+}
+
+.errmsg {
+    color: red;
+    font-weight: 700;
+}
+
+.bold {
+    font-weight: bolder;
+}
+
+.box-center {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 2rem;
+}
+
+input.button {
+    padding: .5rem 1rem;
+    background: var(--subColor);
+    color: #fff;
+}
+
+input.button:hover {
+    background: var(--subLightColor);
+}
+
+dl.confirm-arr {
+    display: grid;
+    grid-template-columns: 350px 1fr;
+    border: 2px solid #333;
+    row-gap: 1px;
+}
+
+dl.confirm-arr dt {
+    grid-column: 1;
+    padding: .5rem 1rem;
+    background: #333;
+    color: #fff;
+    font-weight: 700;
+    text-align: center;
+}
+
+dl.confirm-arr dt:nth-of-type(2n) {
+    background: var(--mainColor);
+}
+
+dl.confirm-arr dd {
+    grid-column: 2;
+    padding: .5rem 1rem;
+    background: #eee;
+}
+
+dl.confirm-arr dd:nth-of-type(2n) {
+    background: var(--mainLightColor);
+}
+
+/*************************************
+* END main START footer
+*************************************/
+footer {
+    padding: 2rem 1rem;
+    color: #999;
+    text-align: center;
+}
+
+/*************************************
+* END footer START only for sp
+*************************************/
+@media only screen and (max-width: 850px) {
+    .sp-hide {
+        visibility: hidden;
+        opacity: 0
+    }
+
+    .sp-visible {
+        visibility: visible;
+        opacity: 1
+    }
+
+    .sp-none {
+        display: none !important
+    }
+
+    .rdx-btn {
+        display: block
+    }
+
+    dl.confirm-arr {
+        display: block;
+        border: none;
+    }
+
+    dl.confirm-arr dd {
+        margin-bottom: 1rem;
+    }
+
+}
+
+/*************************************
+* END only for sp START only for pc
+*************************************/
+@media print,
+screen and (min-width: 850px) {
+    .pc-hide {
+        visibility: hidden;
+        opacity: 0
+    }
+
+    .pc-visible {
+        visibility: visible;
+        opacity: 1
+    }
+
+    .pc-none {
+        display: none !important
+    }
+
+}

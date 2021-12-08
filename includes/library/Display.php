@@ -3,18 +3,23 @@
 class Display {
     private $css = array();
     private $js = array();
+    private $favicon;
     public $title;
 
-    public function __construct( $title ) {
+    function __construct( $title ) {
         $this->title = $title;
     }
 
-    public function setCSS( $link ) {
-        $this->css[] = APP_URL . $link;
+    public function addCSS( $link ) {
+        $this->css[] = APP_URL . 'view/' . $link;
     }
 
-    public function setJS( $link ) {
-        $this->js[] = APP_URL . $link;
+    public function addJS( $link ) {
+        $this->js[] = APP_URL . 'view/' . $link;
+    }
+
+    public function setFavicon( $link ) {
+        $this->favicon = APP_URL . 'view/' . $link;
     }
 
     public function getHeader() {

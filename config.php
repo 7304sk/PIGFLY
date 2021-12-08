@@ -1,7 +1,7 @@
 <?php
 /* ------------------initial settings------------------ */
 /** メールフォームの名前 */
-$form_name = 'メールフォーム';
+$form_name = 'PIGFLY メールフォーム';
 
 /** サーバのメールアドレス（メールの送信元） */
 $mail_sender = 'sender@your.domain';

@@ -16,19 +16,17 @@ class Mail {
         $this->val = $arr;
         $this->facade = $facade;
         $this->file = $file;
-    }
-
-    /** 送信関数のカプセル */
-    public function send() {
-        global $mode_test;
-        $mail =  (object) [
+        $this->mail =  (object) [
             'to'      => $this->to(),
             'header'  => $this->header(),
             'subject' => $this->subject(),
             'body'    => $this->body()
         ];
-        $this->mail = $mail;
-        if( ! $mode_test ) mail( $this->encode_mime( $mail->to ), $this->encode_mime( $mail->subject ), $this->encode_body( $mail->body ), $mail->header );
+    }
+
+    /** 送信関数のカプセル */
+    public function send() {
+        mail( $this->encode_mime( $this->mail->to ), $this->encode_mime( $this->mail->subject ), $this->encode_body( $this->mail->body ), $this->mail->header );
     }
 
     /** エンコード */

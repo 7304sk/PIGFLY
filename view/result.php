@@ -1,9 +1,8 @@
 <?php
 /** 結果確認画面（テストモード専用） */
 $page = new Display( 'メール確認（テストモード） | ' . $form_name );
-$page->setCSS( 'css/radix.min.css' );
-$page->setCSS( 'css/style.css' );
-$page->setJS( 'js/radix.min.js' );
+$page->setFavicon( 'assets/favicon.ico' );
+$page->addCSS( 'assets/style.css' );
 ?>
 
 <?php $page->getHeader(); ?>

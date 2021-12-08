@@ -1,9 +1,8 @@
 <?php
 /** 送信確認画面 */
 $page = new Display( '送信確認 | ' . $form_name );
-$page->setCSS( 'css/radix.min.css' );
-$page->setCSS( 'css/style.css' );
-$page->setJS( 'js/radix.min.js' );
+$page->setFavicon( 'assets/favicon.ico' );
+$page->addCSS( 'assets/style.css' );
 ?>
 
 <?php $page->getHeader(); ?>
