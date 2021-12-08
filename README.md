@@ -1,11 +1,11 @@
 # PIGFLY
 PHP を用いたファイル添付機能付き汎用メールフォームです。PHP に疎い方でも少しの設定で利用ができるように作成しています。
 
-# Requirement
+## Requirement
 PHP 7.2.x ~  
 サーバーでメール送信がサポートされている（Postfixが動作している）必要があります。
 
-# Usage
+## Usage
 サーバーに PIGFLY をディレクトリ毎設置します（ 例：https://hogehoge.com/PIGFLY/ ）。  
 PIGFLY ディレクトリに対して、任意のHTMLからPOST送信することで動作します。  
 セキュリティ上デフォルトでは PIGFLYが設置されているのと同一のドメインからの送信のみ受け付けます（configで追加可能）。
@@ -14,7 +14,7 @@ PIGFLY ディレクトリに対して、任意のHTMLからPOST送信するこ�
 
 ファイル添付を行う場合、HTMLフォームに enctype="multipart/form-data" 属性を設定してください。
 
-# Setting
+## Setting
 config.php で全体設定を行えます。  
 [ Notice ] $mail_sender は可能な限り設置サーバー自身が持つメールアドレスを設定して下さい。  
 Gmailなどのフリーメールや他サーバーのアドレス等でも送信が行えますが、高確率で迷惑メールとして判定されます（最悪の場合サーバーが他からブロックされてしまいます）。  
@@ -29,16 +29,16 @@ suffix はメールの末尾部分です。
 （PHPに触れる必要がある場所があるため、取扱には注意してください。）  
 $page->setCSS() で読み込む css ファイルの追加、$page->setJS() で読み込む js ファイルの追加ができます。
 
-# Note
+## Note
 チェックボックスを利用する場合、name属性の値を配列として扱えるようにする必要があります。  
 そのため、チェックボックスには name="選択肢[]" のように末尾に [] をつけてください。
 
-# Demo
+## Demo
 準備中
 
-# License
+## License
 "PIGFLY" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
-# Author
+## Author
 * 徒浪
 * E-mail: wave.ysk730@gmail.com
