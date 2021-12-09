@@ -2,7 +2,7 @@
 
 class Input {
     public $val;
-    public $errmsg  = '';
+    private $errmsg  = '';
     public $err = false;
     public $confirmed = false;
     public $file = array();
@@ -44,7 +44,7 @@ class Input {
                             $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $key ) . " 】</span>は必須項目です。</p>\n";
                             $this->err = true;
                         }
-                    } elseif( $val == '' ) {
+                    } elseif( $val === '' ) {
                         $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $key ) . " 】</span>は必須項目です。</p>\n";
                         $this->err = true;
                     }
@@ -64,7 +64,7 @@ class Input {
                     }
                 }
             }
-            if( $exist_flag !== true ) {
+            if( ! $exist_flag ) {
                 $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $mandatory_key ) . " 】</span>が選択されていません。</p>\n";
                 $this->err = true;
             }
@@ -74,17 +74,17 @@ class Input {
     /** メール形式のチェック */
     private function mailCheck() {
         global $mode_email_retype, $user_email, $email_retype;
-        if( isset( $this->val[ $user_email ] ) ) {
-            if( $mode_email_retype === true ) {
-                if( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) {
-                    $this->errmsg .= '<p><span class="errmsg">【' . $user_email . '】</span>と<span class="errmsg">【 ' . $email_retype . " 】</span>の値が一致しません。</p>\n";
-                    $this->err = true;
-                    return;
-                }
+        if( $mode_email_retype && ( $this->val[ $user_email ] !== '' ) && ( $this->val[ $email_retype ] !== '' ) && ( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) ) {
+            if( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) {
+                $this->errmsg .= '<p><span class="errmsg">【' . $user_email . '】</span>と<span class="errmsg">【 ' . $email_retype . " 】</span>の値が一致しません。</p>\n";
+                $this->err = true;
+                return;
             }
+        }
+        if( $this->val[ $user_email ] !== '' ) {
             $reg = ( preg_match( '/^[\.!#%&\-_0-9a-zA-Z\?\/\+]+\@[!#%&\-_0-9a-zA-Z]+(\.[!#%&\-_0-9a-zA-Z]+)+$/', $this->val[ $user_email ] ) && count( explode( '@', $this->val[ $user_email ] ) ) === 2 ) ? true : false;
             if( ! $reg ) {
-                $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $this->val[ $user_email ] ) . " 】</span>は正しいメールアドレスの形式ではありません。</p>\n";
+                $this->errmsg .= '<p><span class="errmsg">' . Sanitize::hsc( $this->val[ $user_email ] ) . " </span>は正しいメールアドレスの形式ではありません。</p>\n";
                 $this->err = true;
             }
         }
@@ -143,6 +143,11 @@ class Input {
                 }
             }
         }
+    }
+
+    /** エラー画面の出力 */
+    public function error() {
+        echo $this->errmsg;
     }
 
     /** 確認画面用のHTML出力 */

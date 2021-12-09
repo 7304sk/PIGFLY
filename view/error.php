@@ -18,10 +18,10 @@ $page->addCSS( 'assets/style.css' );
             <p>入力内容に誤りがあります。下記をご確認の上「戻る」より訂正ください。</p>
         </section>
         <section class="error-box">
-            <?php echo $input->errmsg; ?>
+            <?php $input->error(); ?>
         </section>
         <div class="box-center">
-            <input class="button back" type="button" value="前画面に戻る" onClick="history.back()">
+            <input class="button back" type="button" value="前の画面に戻る" onClick="history.back()">
         </div>
     </article>
 </main>

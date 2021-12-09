@@ -18,7 +18,7 @@ $page->addCSS( 'assets/style.css' );
             <p>以下の内容で間違いがなければ、「送信する」ボタンを押してください。</p>
         </section>
         <section class="confirm-box">
-            <?php $input->confirm( '送信する' ); ?>
+            <?php $input->confirm( '送信する', '前の画面に戻る' ); ?>
         </section>
     </article>
 </main>
