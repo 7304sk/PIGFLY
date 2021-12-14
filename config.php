@@ -38,6 +38,9 @@ $mode_confirm = true;
 /** メールアドレス確認欄の有無 */
 $mode_email_retype = true;
 
+/** ファイルアップロードの許可 */
+$mode_upload_file = false;
+
 /** テストモード（メンテナンス用） */
 $mode_test = false;
 /* ------------------mode switchs END------------------ */

@@ -39,13 +39,13 @@ if( $input->err ) {
         Display::view( APP_PATH . 'view/confirm.php' );
     } else {
         /** send mail */
-        mb_language('Japanese');
-        mb_internal_encoding('UTF-8');
+        mb_language( 'Japanese' );
+        mb_internal_encoding( 'UTF-8' );
         $mail_facade = new MailFacade;
         $send_file = ( ! empty( $_SESSION[ 'file' ] ) ) ? $_SESSION[ 'file' ] : ( ( ! empty( $input->file ) ) ? $input->file : array() );
         $to_user = new Mail( $admin_email, $input->val[ $user_email ], $input->val, $mail_facade->to_user );
         $to_admin = new Mail( $input->val[ $user_email ], $admin_email, $input->val, $mail_facade->to_admin, $send_file );
-        if( session_status() == PHP_SESSION_ACTIVE ) {
+        if( session_status() === PHP_SESSION_ACTIVE ) {
             $_SESSION = array();
             session_destroy();
         }

@@ -92,8 +92,13 @@ class Input {
 
     /** 添付ファイルのチェック */
     private function fileCheck() {
-        global $file_extensions, $file_max, $mode_confirm;
+        global $file_extensions, $file_max, $mode_confirm, $mode_upload_file;
         if( ! empty( $_FILES ) ) {
+            if ( ! $mode_upload_file ) {
+                $this->errmsg .= "このフォームでファイルのアップロードは許可されていません。\n";
+                $this->err = true;
+                return;
+            }
             foreach( $_FILES as $key => $val ) {
                 $fileData = array();
                 /** phpiniの設定によるUPLOAD_ERRのチェック */
