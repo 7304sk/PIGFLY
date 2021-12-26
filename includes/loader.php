@@ -1,5 +1,5 @@
 <?php
-
+/** クラスローダー */
 class ClassLoader {
     protected $dirs;
 
@@ -21,3 +21,7 @@ class ClassLoader {
         }
     }
 }
+
+/** その他ファイルの読み込み */
+$replace_map = require_once APP_PATH . 'includes/replace.php';
+require_once APP_PATH . 'includes/functions.php';

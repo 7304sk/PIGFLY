@@ -7,7 +7,7 @@ class Mail {
     private $facade;
     private $file;
     private $boundary;
-    public $mail;
+    private $mail;
 
     function __construct( $from, $to, $arr, $facade, $file = array() ) {
         $this->boundary = md5( uniqid( rand() ) );
@@ -16,7 +16,7 @@ class Mail {
         $this->val = $arr;
         $this->facade = $facade;
         $this->file = $file;
-        $this->mail =  (object) [
+        $this->mail = [
             'to'      => $this->to(),
             'header'  => $this->header(),
             'subject' => $this->subject(),
@@ -26,7 +26,7 @@ class Mail {
 
     /** 送信関数のカプセル */
     public function send() {
-        mail( $this->encode_mime( $this->mail->to ), $this->encode_mime( $this->mail->subject ), $this->encode_body( $this->mail->body ), $this->mail->header );
+        mail( $this->encode_mime( $this->mail[ 'to' ] ), $this->encode_mime( $this->mail[ 'subject' ] ), $this->encode_body( $this->mail[ 'body' ] ), $this->mail[ 'header' ] );
     }
 
     /** エンコード */
@@ -41,12 +41,12 @@ class Mail {
 
     /** To の設定 */
     private function to() {
-        return Sanitize::trim( $this->to );
+        return clearRN( $this->to );
     }
 
     /** タイトルの設定 */
     private function subject() {
-        return Sanitize::trim( $this->facade->subject );
+        return clearRN( $this->facade->subject );
     }
 
     /** 本文の設定 */
@@ -63,7 +63,7 @@ class Mail {
         foreach( $this->val as $key => $val ) {
             if( ! empty( $val ) ) {
                 if( ! ( $mode_email_retype && $key === $email_retype ) ) {
-                    $str .= '【 ' . $key . ' 】 ' . Sanitize::replaceDep( implodeVal( $val ) ) . "\n";
+                    $str .= '【 ' . $key . ' 】 ' . replaceDep( implodeVal( $val ) ) . "\n";
                 }
             }
         }
@@ -92,10 +92,10 @@ class Mail {
     private function header() {
         global $form_name, $mail_sender;
         $str = '';
-        $str .= 'From: ' . mb_encode_mimeheader( Sanitize::trim( $form_name ), 'ISO-2022-JP-MS', 'UTF-8' ) . ' <' . mb_encode_mimeheader( Sanitize::trim( $mail_sender ), 'ISO-2022-JP-MS', 'UTF-8' ) . ">\n";
-        if( ! empty( $this->facade->cc ) ) $str .= "Cc: " . mb_encode_mimeheader( Sanitize::trim( $this->facade->cc ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
-        if( ! empty( $this->facade->bcc ) ) $str .= "Bcc: " . mb_encode_mimeheader( Sanitize::trim( $this->facade->bcc ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
-        $str .= "Reply-To: " . mb_encode_mimeheader( Sanitize::trim( $this->from ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
+        $str .= 'From: ' . mb_encode_mimeheader( clearRN( $form_name ), 'ISO-2022-JP-MS', 'UTF-8' ) . ' <' . mb_encode_mimeheader( clearRN( $mail_sender ), 'ISO-2022-JP-MS', 'UTF-8' ) . ">\n";
+        if( ! empty( $this->facade->cc ) ) $str .= "Cc: " . mb_encode_mimeheader( clearRN( $this->facade->cc ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
+        if( ! empty( $this->facade->bcc ) ) $str .= "Bcc: " . mb_encode_mimeheader( clearRN( $this->facade->bcc ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
+        $str .= "Reply-To: " . mb_encode_mimeheader( clearRN( $this->from ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
         $str .= "X-Mailer: PHP/" . phpversion() . "\n";
         $str .= "Content-Transfer-Encoding: 7bit\n";
         if ( ! empty( $this->file ) ) {
@@ -104,5 +104,16 @@ class Mail {
             $str .= "Content-Type:text/plain; charset=iso-2022-jp";
         }
         return $str;
+    }
+
+    /** mail ゲッター */
+    public function getMail() {
+        $html = "<dl class=\"result-arr\">\n";
+        foreach ( $this->mail as $key => $val ) {
+            $html .= '<dt>'. $key . "</dt>\n";
+            $html .= '<dd><pre>'. $val . "</pre></dd>\n";
+        }
+        $html .= "</dl>";
+        echo $html;
     }
 }

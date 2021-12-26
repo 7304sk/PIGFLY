@@ -25,9 +25,9 @@ $page->addCSS( 'assets/style.css' );
         </section>
         <section>
             <h2>メール（管理者へ送信）</h2>
-            <p><?php var_pre( $to_admin->mail ); ?></p>
+            <?php $to_admin->getMail(); ?>
             <h2>メール（ユーザへの自動返信）</h2>
-            <p><?php var_pre( $to_user->mail ); ?></p>
+            <?php $to_user->getMail(); ?>
         </section>
     </article>
 </main>

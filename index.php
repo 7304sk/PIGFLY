@@ -1,44 +1,43 @@
 <?php
-/** Define APP_PATH as this file's directory */
+/** APP_PATH, APP_URL の定義  */
 define( 'APP_PATH', __DIR__ . '/' );
 define( 'APP_URL', ( ( ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' ) ) ? 'https://' : 'http://' ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ] );
 
-/** Load initial settings */
+/** config.php の読み込み */
 require_once APP_PATH . 'config.php';
 array_push( $mandatory, $user_email );
 if( $mode_email_retype && ! empty( $email_retype ) ) array_push( $mandatory, $email_retype );
 if( $mode_test ) ini_set('display_errors', 1);
 
-/** Include class loader */
+/** ローダーの読み込み、実行 */
 require APP_PATH . 'includes/loader.php';
 $loader = new ClassLoader();
 $loader->set( APP_PATH . 'includes/library' );
 $loader->start();
 
-/** Include static functions */
-require_once APP_PATH . 'includes/functions.php';
-
-/** Check the referer */
+/** リファラチェック実行 */
 refererCheck( $app_domain );
 
 /**
- * Start main process
+ * Main process
  */
 if( $mode_confirm ) {
     session_name( 'PIGFLY' );
     session_start();
 }
-$_POST = isset( $_POST ) ? Sanitize::clearNull( $_POST ) : array();
+$_POST = isset( $_POST ) ? clearNull( $_POST ) : array();
 $input = new Input( $_POST );
 $input->check();
-if( $input->err ) {
+if( $input->error ) {
+    /** エラー画面出力 */
     Display::view( APP_PATH . 'view/error.php' );
 } else {
     if( $mode_confirm && ! $input->confirmed ) {
+        /** 確認画面出力 */
         $_SESSION[ 'file' ] = $input->file;
         Display::view( APP_PATH . 'view/confirm.php' );
     } else {
-        /** send mail */
+        /** 送信メール設定 */
         mb_language( 'Japanese' );
         mb_internal_encoding( 'UTF-8' );
         $mail_facade = new MailFacade;
@@ -49,7 +48,7 @@ if( $input->err ) {
             $_SESSION = array();
             session_destroy();
         }
-        /** Finish */
+        /** メール送信、画面遷移 */
         if( $mode_test ) {
             Display::view( APP_PATH . 'view/result.php' );
         } else {

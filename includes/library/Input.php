@@ -1,14 +1,18 @@
 <?php
 
 class Input {
-    public $val;
-    private $errmsg  = '';
-    public $err = false;
+    public $val = array();
+    public $error_message  = array();
+    public $error = false;
     public $confirmed = false;
     public $file = array();
 
     public function __construct( $arr ) {
         $this->val = $arr;
+    }
+
+    private function addErrorMessage( $str ) {
+        $this->error_message[] = $str;
     }
 
     /** チェック関数のカプセル */
@@ -17,6 +21,7 @@ class Input {
         $this->requireCheck();
         $this->mailCheck();
         $this->fileCheck();
+        if( ! empty( $this->error_message ) ) $this->error = true;
     }
 
     /** トークンチェック */
@@ -41,12 +46,10 @@ class Input {
                 if( $key === $mandatory_key ) {
                     if( is_array( $val ) ) {
                         if( implodeVal( $val ) == '' ) {
-                            $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $key ) . " 】</span>は必須項目です。</p>\n";
-                            $this->err = true;
+                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
                         }
                     } elseif( $val === '' ) {
-                        $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $key ) . " 】</span>は必須項目です。</p>\n";
-                        $this->err = true;
+                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
                     }
                     $exist_flag = true;
                     break;
@@ -56,8 +59,7 @@ class Input {
                 foreach( $_FILES as $key => $val ) {
                     if( $key === $mandatory_key ) {
                         if( empty( $val[ 'tmp_name' ] ) ) {
-                            $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $key ) . " 】</span>は必須項目です。</p>\n";
-                            $this->err = true;
+                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
                         }
                         $exist_flag = true;
                         break;
@@ -65,8 +67,7 @@ class Input {
                 }
             }
             if( ! $exist_flag ) {
-                $this->errmsg .= '<p><span class="errmsg">【 ' . Sanitize::hsc( $mandatory_key ) . " 】</span>が選択されていません。</p>\n";
-                $this->err = true;
+                $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $mandatory_key ) . ' 】</span>が入力されていません。' );
             }
         }
     }
@@ -76,16 +77,13 @@ class Input {
         global $mode_email_retype, $user_email, $email_retype;
         if( $mode_email_retype && ( $this->val[ $user_email ] !== '' ) && ( $this->val[ $email_retype ] !== '' ) && ( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) ) {
             if( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) {
-                $this->errmsg .= '<p><span class="errmsg">【' . $user_email . '】</span>と<span class="errmsg">【 ' . $email_retype . " 】</span>の値が一致しません。</p>\n";
-                $this->err = true;
-                return;
+                $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $user_email ) . ' 】</span>と<span class="errmsg">【 ' . hsc( $email_retype ) . ' 】</span>の値が一致しません。' );
             }
         }
         if( $this->val[ $user_email ] !== '' ) {
             $reg = ( preg_match( '/^[\.!#%&\-_0-9a-zA-Z\?\/\+]+\@[!#%&\-_0-9a-zA-Z]+(\.[!#%&\-_0-9a-zA-Z]+)+$/', $this->val[ $user_email ] ) && count( explode( '@', $this->val[ $user_email ] ) ) === 2 ) ? true : false;
             if( ! $reg ) {
-                $this->errmsg .= '<p><span class="errmsg">' . Sanitize::hsc( $this->val[ $user_email ] ) . " </span>は正しいメールアドレスの形式ではありません。</p>\n";
-                $this->err = true;
+                $this->addErrorMessage( '<span class="errmsg">' . hsc( $this->val[ $user_email ] ) . '</span> は正しいメールアドレスの形式ではありません。' );
             }
         }
     }
@@ -95,20 +93,19 @@ class Input {
         global $file_extensions, $file_max, $mode_confirm, $mode_upload_file;
         if( ! empty( $_FILES ) ) {
             if ( ! $mode_upload_file ) {
-                $this->errmsg .= "このフォームでファイルのアップロードは許可されていません。\n";
-                $this->err = true;
+                $this->addErrorMessage( 'このフォームでファイルのアップロードは許可されていません。' );
                 return;
             }
             foreach( $_FILES as $key => $val ) {
                 $fileData = array();
                 /** phpiniの設定によるUPLOAD_ERRのチェック */
                 if( $val[ 'error' ] != UPLOAD_ERR_OK && $val[ 'error' ] !== 4 ) {
-                    if ( $val[ 'error' ] === 1 ) {
-                        $this->errmsg .= "ファイルの容量が大きすぎます。\n";
-                        $this->err = true;
+                    if ( $val[ 'error' ] === 1 || $val[ 'error' ] === 2 ) {
+                        $this->addErrorMessage( $val[ 'name' ] . 'はファイルの容量が大きすぎます。' );
+                    } else if ( $val[ 'error' ] === 3 ) {
+                        $this->addErrorMessage( $val[ 'name' ] . 'は一部しかアップロードされていません。' );
                     } else {
-                        $this->errmsg .= "原因不明のエラーです。\n";
-                        $this->err = true;
+                        $this->addErrorMessage( $val[ 'name' ] . '原因不明のエラーです。' );
                     }
                 }
                 /** config.php によるチェック */
@@ -125,13 +122,12 @@ class Input {
                         $ext_allow[] = strtoupper( $ext );
                     }
                     if ( ! @in_array( $fileData[ 'extension' ], $ext_allow ) ) {
-                        $this->errmsg .= "<p><span class=\"errmsg\">【 " . $fileData[ 'name' ] . " 】</span>は添付を許可されていません。<br>添付可能なファイルの種類（拡張子）は <span class=\"bpld\">[" . implode( ', ', $file_extensions ) . "] </span>です。</p>\n";
-                        $this->err = true;
+                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>は添付を許可されていません。<br>添付可能なファイルの種類（拡張子）は <span class="bpld">[" . implode( ', ', $file_extensions ) . "]</span> です。' );
                     }
                     /** アップロード容量制限 */
                     $size = filesize( $val[ 'tmp_name' ] );
                     if ( ($size / 1024) > $file_max ) {
-                        $this->errmsg .= "<p><span class=\"errmsg\">【 " . $fileData[ 'name' ] . " 】</span>はファイルの容量が大きすぎます。（上限" . $file_max . "KB）</p>\n";
+                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>はファイルの容量が大きすぎます。（上限'. $file_max . 'KB）' );
                     }
 
                     $fp = fopen( $fileData[ 'tmp' ], 'r' );
@@ -151,25 +147,32 @@ class Input {
     }
 
     /** エラー画面の出力 */
-    public function error() {
-        echo $this->errmsg;
+    public function getError( $text_back = '戻る' ) {
+        $html = "<ul class=\"error-arr\">\n";
+        foreach ( $this->error_message as $key => $val ) {
+            $html .= '<li>'. $val . "</li>\n";
+        }
+        $html .= "</ul><div class=\"toggle-box\">\n";
+        $html .= "<input class=\"button back\" type=\"button\" value=\"" . $text_back . "\" onClick=\"history.back()\">\n";
+        $html .= "</div>";
+        echo $html;
     }
 
     /** 確認画面用のHTML出力 */
-    public function confirm( $text_submit = '送信', $text_back = '戻る' ) {
+    public function getConfirm( $text_submit = '送信', $text_back = '戻る' ) {
         global $email_retype, $replaceStr, $mode_confirm, $mode_email_retype, $replace_str;
         $html = '<form action="' . APP_URL . "\" method=\"POST\">\n<dl class=\"confirm-arr\">\n";
         foreach( $this->val as $key => $val ) {
             if( ! empty( $val ) ) {
                 $out = '';
                 if( $mode_email_retype && $key == $email_retype ) {
-                    $html .= '<input type="hidden" name="' . Sanitize::hsc( $key ) . '" value="' . str_replace( array( '<br />', '<br>' ), '', Sanitize::hsc( $val ) ) . "\" />\n";
+                    $html .= '<input type="hidden" name="' . hsc( $key ) . '" value="' . str_replace( array( '<br />', '<br>' ), '', hsc( $val ) ) . "\" />\n";
                 } else {
                     $out .= implodeVal( $val );
-                    $out = nl2br( Sanitize::hsc( $out ) );
-                    $out = str_replace($replace_str['before'], $replace_str['after'], $out);
-                    $html .= '<dt>' . Sanitize::hsc( $key ) . '</dt><dd>' . $out;
-                    $html .= '<input type="hidden" name="' . Sanitize::hsc( $key ) . '" value="' . str_replace( array( '<br />', '<br>' ), '', $out ) . "\" /></dd>\n";
+                    $out = nl2br( hsc( $out ) );
+                    $out = replaceDep( implodeVal( $out ) );
+                    $html .= '<dt>' . hsc( $key ) . '</dt><dd>' . $out;
+                    $html .= '<input type="hidden" name="' . hsc( $key ) . '" value="' . str_replace( array( '<br />', '<br>' ), '', $out ) . "\" /></dd>\n";
                 }
             }
         }
@@ -178,7 +181,7 @@ class Input {
             $_SESSION['mailform_token'] = $token;
             $html .= '<input type="hidden" name="mailform_token" value="' . $token . "\" />\n";
         }
-        $html .= "</dl>\n<div class=\"box-center\">\n";
+        $html .= "</dl>\n<div class=\"toggle-box\">\n";
         $html .= "<input class=\"button back\" type=\"button\" value=\"" . $text_back . "\" onClick=\"history.back()\">\n<input class=\"button submit\" type=\"submit\" value=\"". $text_submit ."\">\n";
         $html .= "</div>\n</form>";
         echo $html;

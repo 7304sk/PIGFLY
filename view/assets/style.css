@@ -353,14 +353,10 @@ main h2 {
     font-weight: 700;
 }
 
-.error-box {
-    padding: 1.5rem;
+ul.error-arr {
+    padding: 1.5rem 1rem 1.5rem 3rem;
     border: 1px solid #ccc;
     border-radius: 1rem;
-}
-
-.error-box p {
-    margin-bottom: 0;
 }
 
 .errmsg {
@@ -372,7 +368,7 @@ main h2 {
     font-weight: bolder;
 }
 
-.box-center {
+.toggle-box {
     display: flex;
     justify-content: center;
     flex-wrap: wrap;
@@ -389,14 +385,16 @@ input.button:hover {
     background: var(--subLightColor);
 }
 
-dl.confirm-arr {
+dl.confirm-arr,
+dl.result-arr {
     display: grid;
     grid-template-columns: 350px 1fr;
     border: 2px solid #333;
     row-gap: 1px;
 }
 
-dl.confirm-arr dt {
+dl.confirm-arr dt,
+dl.result-arr dt {
     grid-column: 1;
     padding: .5rem 1rem;
     background: #333;
@@ -405,17 +403,20 @@ dl.confirm-arr dt {
     text-align: center;
 }
 
-dl.confirm-arr dt:nth-of-type(2n) {
+dl.confirm-arr dt:nth-of-type(2n),
+dl.result-arr dt:nth-of-type(2n) {
     background: var(--mainColor);
 }
 
-dl.confirm-arr dd {
+dl.confirm-arr dd,
+dl.result-arr dd {
     grid-column: 2;
     padding: .5rem 1rem;
     background: #eee;
 }
 
-dl.confirm-arr dd:nth-of-type(2n) {
+dl.confirm-arr dd:nth-of-type(2n),
+dl.result-arr dd:nth-of-type(2n) {
     background: var(--mainLightColor);
 }
 
@@ -450,12 +451,14 @@ footer {
         display: block
     }
 
-    dl.confirm-arr {
+    dl.confirm-arr,
+    dl.result-arr {
         display: block;
         border: none;
     }
 
-    dl.confirm-arr dd {
+    dl.confirm-arr dd,
+    dl.result-arr dd {
         margin-bottom: 1rem;
     }
 
