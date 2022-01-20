@@ -1,15 +1,4 @@
 <?php
-/* デバッグ用関数
-function console_log( $var ) {
-    echo '<script>console.log('. json_encode( $var ) .')</script>';
-}
-function var_pre( $var ) {
-    echo '<pre>';
-    echo hsc( var_export( $var, true ) );
-    echo '</pre>';
-}
-*/
-
 /** 簡易リファラチェック（CRSF対策） */
 function refererCheck( $app_domain ) {
     $domains = array_merge( [ $_SERVER[ 'SERVER_NAME' ] ], $app_domain );

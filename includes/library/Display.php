@@ -27,14 +27,14 @@ class Display {
         $css_links = $this->css;
         $js_links = $this->js;
         $favicon = $this->favicon;
-        require_once APP_PATH . 'includes/template-parts/header.php';
+        require_once APP_PATH . 'view/template-parts/header.php';
     }
 
     public function getFooter() {
         $page_title = $this->title;
         $css_links = $this->css;
         $js_links = $this->js;
-        require_once APP_PATH . 'includes/template-parts/footer.php';
+        require_once APP_PATH . 'view/template-parts/footer.php';
     }
 
     public static function view( $view ) {
