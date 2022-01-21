@@ -48,3 +48,9 @@ function implodeVal( $arr ) {
     }
     return $str;
 }
+
+/** validations.php 用　エラー追加関数 */
+function add_error( $message ) {
+    global $input;
+    $input->addErrorMessage( $message );
+}

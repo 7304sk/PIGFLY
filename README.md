@@ -1,5 +1,8 @@
+![GitHub all releases](https://img.shelds.io/github/downloads/7304sk/PIGFLY/total.svg)
+
 # PIGFLY
 PHP を用いたファイル添付機能付き汎用メールフォームです。PHP に疎い方でも少しの設定で利用ができるように作成しています。
+アップデート履歴は HISTORY.md を参照してください。
 
 ## Requirement
 PHP 7.2.x ~  
@@ -13,6 +16,8 @@ PIGFLY ディレクトリに対して、任意のHTMLからPOST送信するこ�
 フォームで送信されたものをすべて送信します。name属性の値は日本語で設定可能です。
 
 ファイル添付を行う場合、HTMLフォームに enctype="multipart/form-data" 属性を設定してください。
+
+入力内容に独自に制限を設けたい場合、validations.phpを利用できます（処理は php で記述する必要があります。）
 
 ## Setting
 config.php で全体設定を行えます。  

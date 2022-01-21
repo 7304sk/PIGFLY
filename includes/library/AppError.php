@@ -5,6 +5,7 @@ class AppError {
         '<h1>ERROR 00</h1><p>You have no referer.</p>',
         '<h1>ERROR 01</h1><p>The referer is invalid.</p>',
         '<h1>ERROR 02</h1><p>The token is incorrect.</p>',
+        '<h1>ERROR 03</h1><p>There are function references from invalid locations.</p>',
     ];
 
     private function __construct() {}

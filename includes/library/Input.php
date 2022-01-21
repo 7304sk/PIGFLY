@@ -1,28 +1,56 @@
 <?php
 
 class Input {
-    public $val = array();
-    public $error_message  = array();
-    public $error = false;
-    public $confirmed = false;
-    public $file = array();
+    private $val = array();
+    private $error_message  = array();
+    private $error = false;
+    private $confirmed = false;
+    private $file = array();
+    private $checking = false;
 
     public function __construct( $arr ) {
         $this->val = $arr;
     }
 
-    private function addErrorMessage( $str ) {
-        $this->error_message[] = $str;
+    public function addErrorMessage( $str ) {
+        if ( $this->checking() ) {
+            $this->error_message[] = $str;
+        } else {
+            AppError::exit( 3 );
+        }
     }
 
     /** チェック関数のカプセル */
     public function check() {
+        $this->checking = true;
         $this->tokenCheck();
         $this->requireCheck();
         $this->mailCheck();
         $this->fileCheck();
+        $this->uniqueCheck();
+        $this->checking = false;
         if( ! empty( $this->error_message ) ) $this->error = true;
     }
+    
+    /** checking の getter */
+    public function checking() {
+        return $this->checking;
+    } 
+
+    /** error の getter */
+    public function error() {
+        return $this->error;
+    }
+
+    /** confirmed の getter */
+    public function confirmed() {
+        return $this->confirmed;
+    }
+
+    /** file の getter */
+    public function file() {
+        return $this->file;
+    } 
 
     /** トークンチェック */
     private function tokenCheck() {
@@ -146,6 +174,13 @@ class Input {
         }
     }
 
+    /** validations.php の実行 */
+    private function uniqueCheck() {
+        foreach( $this->val as $name => $value ) {
+            require APP_PATH . 'validations.php';
+        }
+    }
+
     /** エラー画面の出力 */
     public function getError( $text_back = '戻る' ) {
         $html = "<ul class=\"error-arr\">\n";
@@ -187,4 +222,12 @@ class Input {
         echo $html;
     }
 
+    /** val の getter */
+    public function value( $key = null ) {
+        if ( $key == null ) {
+            return $this->val;
+        } else {
+            return $this->val[ $key ];
+        }
+    }
 }

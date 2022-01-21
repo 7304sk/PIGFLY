@@ -28,22 +28,22 @@ if( $mode_confirm ) {
 $_POST = isset( $_POST ) ? clearNull( $_POST ) : array();
 $input = new Input( $_POST );
 $input->check();
-if( $input->error ) {
+if( $input->error() ) {
     /** エラー画面出力 */
     Display::view( APP_PATH . 'view/error.php' );
 } else {
-    if( $mode_confirm && ! $input->confirmed ) {
+    if( $mode_confirm && ! $input->confirmed() ) {
         /** 確認画面出力 */
-        $_SESSION[ 'file' ] = $input->file;
+        $_SESSION[ 'file' ] = $input->file();
         Display::view( APP_PATH . 'view/confirm.php' );
     } else {
         /** 送信メール設定 */
         mb_language( 'Japanese' );
         mb_internal_encoding( 'UTF-8' );
         $mail_facade = new MailFacade;
-        $send_file = ( ! empty( $_SESSION[ 'file' ] ) ) ? $_SESSION[ 'file' ] : ( ( ! empty( $input->file ) ) ? $input->file : array() );
-        $to_user = new Mail( $admin_email, $input->val[ $user_email ], $input->val, $mail_facade->to_user );
-        $to_admin = new Mail( $input->val[ $user_email ], $admin_email, $input->val, $mail_facade->to_admin, $send_file );
+        $send_file = ( ! empty( $_SESSION[ 'file' ] ) ) ? $_SESSION[ 'file' ] : ( ( ! empty( $input->file() ) ) ? $input->file() : array() );
+        $to_user = new Mail( $admin_email, $input->value( $user_email ), $input->value(), $mail_facade->to_user );
+        $to_admin = new Mail( $input->value( $user_email ), $admin_email, $input->value(), $mail_facade->to_admin, $send_file );
         if( session_status() === PHP_SESSION_ACTIVE ) {
             $_SESSION = array();
             session_destroy();
