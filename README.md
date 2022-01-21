@@ -1,4 +1,4 @@
-![GitHub all releases](https://img.shelds.io/github/downloads/7304sk/PIGFLY/total.svg)
+![GitHub all releases](https://img.shields.io/github/downloads/7304sk/PIGFLY/total)
 
 # PIGFLY
 PHP を用いたファイル添付機能付き汎用メールフォームです。PHP に疎い方でも少しの設定で利用ができるように作成しています。
