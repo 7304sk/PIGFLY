@@ -50,7 +50,7 @@ function implodeVal( $arr ) {
 }
 
 /** validations.php 用　エラー追加関数 */
-function add_error( $message ) {
+function addError( $message ) {
     global $input;
     $input->addErrorMessage( $message );
 }

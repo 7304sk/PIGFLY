@@ -13,8 +13,8 @@
 if ( $name == '内容' ) {
     $limit = 500;
     if ( mb_strlen( $value ) > $limit ) {
-        $message = '【' . $name . '】は文字数制限（' . $limit . '）を超過しています（' . mb_strlen( $value ) . '字）。';
-        add_error( $message );
+        $message = '【' . $name . '】は文字数制限（' . $limit . '字）を超過しています（' . mb_strlen( $value ) . '字）。';
+        addError( $message );
     }
 }
 */

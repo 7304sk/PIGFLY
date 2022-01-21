@@ -10,6 +10,7 @@ class Mail {
     private $mail;
 
     function __construct( $from, $to, $arr, $facade, $file = array() ) {
+        global $form_name, $mail_sender;
         $this->boundary = md5( uniqid( rand() ) );
         $this->from = $from;
         $this->to = $to;
@@ -17,6 +18,7 @@ class Mail {
         $this->facade = $facade;
         $this->file = $file;
         $this->mail = [
+            'from'    => clearRN( $form_name ) . ' <' . clearRN( $mail_sender ) . '>', // 確認用
             'to'      => $this->to(),
             'header'  => $this->header(),
             'subject' => $this->subject(),
@@ -110,8 +112,8 @@ class Mail {
     public function getMail() {
         $html = "<dl class=\"result-arr\">\n";
         foreach ( $this->mail as $key => $val ) {
-            $html .= '<dt>'. $key . "</dt>\n";
-            $html .= '<dd><pre>'. $val . "</pre></dd>\n";
+            $html .= '<dt>'. hsc( $key ) . "</dt>\n";
+            $html .= '<dd><pre>'. hsc( $val ) . "</pre></dd>\n";
         }
         $html .= "</dl>";
         echo $html;
