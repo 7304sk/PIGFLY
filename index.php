@@ -8,6 +8,7 @@ require_once APP_PATH . 'config.php';
 array_push( $mandatory, $user_email );
 if( $mode_email_retype && ! empty( $email_retype ) ) array_push( $mandatory, $email_retype );
 if( $mode_test ) ini_set('display_errors', 1);
+if( empty($mail_sender) ) $mail_sender = 'no-reply@' . $_SERVER[ 'HTTP_HOST' ];
 
 /** ローダーの読み込み、実行 */
 require APP_PATH . 'includes/loader.php';

@@ -1,12 +1,9 @@
-![GitHub all releases](https://img.shields.io/github/downloads/7304sk/PIGFLY/total)
-
 # PIGFLY
 PHP を用いたファイル添付機能付き汎用メールフォームです。PHP に疎い方でも少しの設定で利用ができるように作成しています。
 アップデート履歴は HISTORY.md を参照してください。
 
 ## Requirement
 PHP 7.2.x ~  
-サーバーでメール送信がサポートされている（Postfixが動作している）必要があります。
 
 ## Usage
 サーバーに PIGFLY をディレクトリ毎設置します（ 例：https://hogehoge.com/PIGFLY/ ）。  
@@ -47,5 +44,5 @@ Gmailなどのフリーメールや他サーバーのアドレス等でも送信
 "PIGFLY" is under [MIT license](https://en.wikipedia.org/wiki/MIT_License).
 
 ## Author
-* 徒浪
-* E-mail: wave.ysk730@gmail.com
+* shoalwave
+* E-mail: shoalwave.dev@gmail.com
