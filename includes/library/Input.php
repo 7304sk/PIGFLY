@@ -16,11 +16,11 @@ class Input {
         if ( $this->checking() ) {
             $this->error_message[] = $str;
         } else {
-            AppError::exit( 3 );
+            AppError::id( 4 );
         }
     }
 
-    /** チェック関数のカプセル */
+    /** The capsule to execute all check functions. */
     public function check() {
         $this->checking = true;
         $this->tokenCheck();
@@ -56,7 +56,7 @@ class Input {
     private function tokenCheck() {
         if( isset( $_SESSION[ 'mailform_token' ] ) && isset( $this->val[ 'mailform_token' ] ) ) {
             if( $_SESSION[ 'mailform_token' ] !== $this->val[ 'mailform_token' ] ) {
-                AppError::exit( 2 );
+                AppError::id( 3 );
             } else {
                 $this->confirmed = true;
                 unset( $_SESSION[ 'mailform_token' ] );
@@ -212,7 +212,7 @@ class Input {
             }
         }
         if( $mode_confirm ) {
-            $token = uniqid( bin2hex( random_bytes( 1 ) ) );
+            $token = uniqid( bin2hex( md5( uniqid() ) ) );
             $_SESSION['mailform_token'] = $token;
             $html .= '<input type="hidden" name="mailform_token" value="' . $token . "\" />\n";
         }
