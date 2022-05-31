@@ -1,5 +1,22 @@
 <?php
-/* ------------------initial settings------------------ */
+/* >>>>>>>>>> Mode switches >>>>>>>>>> */
+/** 確認画面の有無 */
+$mode_confirm = true;
+
+/** メールアドレス確認欄の有無 */
+$mode_email_retype = true;
+
+/** ファイルアップロードの許可 */
+$mode_upload_file = false;
+
+/** ログファイルの出力 */
+$mode_log = false;
+
+/** テストモード（メンテナンス用） */
+$mode_test = false;
+/* <<<<<<<<<< Mode switches <<<<<<<<<< */
+
+/* >>>>>>>>>> Unique variables >>>>>>>>>> */
 /** メールフォームの名前 */
 $form_name = 'PIGFLY メールフォーム';
 
@@ -28,23 +45,15 @@ $page_thanks = 'https://www.google.com/';
 /** リファラチェック用、フォームを設置しているドメインがこのアプリと違うドメインにある場合に追加する */
 $app_domain = [];
 
+/** 出力するログファイル（相対パスと絶対パスどちらも可能） */
+$log_output_file = './log/log.csv';
+
+/** ログファイルに出力するinput項目 */
+$log_output_items = ['Email', '氏名', '件名', '内容'];
+
 /** アップロードを許可する拡張子 */
 $file_extensions = [ 'pdf','doc','docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'gif' ];
 
 /** アップロードファイルのサイズ上限（KB） */
 $file_max = 3000;
-/* ----------------initial settings END---------------- */
-
-/* --------------------mode switchs-------------------- */
-/** 確認画面の有無 */
-$mode_confirm = true;
-
-/** メールアドレス確認欄の有無 */
-$mode_email_retype = true;
-
-/** ファイルアップロードの許可 */
-$mode_upload_file = false;
-
-/** テストモード（メンテナンス用） */
-$mode_test = false;
-/* ------------------mode switchs END------------------ */
+/* <<<<<<<<<< Unique variables <<<<<<<<<< */

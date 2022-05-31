@@ -36,13 +36,13 @@ function implodeVal( $arr ) {
             if( is_array( $val ) ) {
                 foreach( $val as $kk => $vv ) {
                     if( $kk === 0 || $vv == '' ) $kk = '';
-                    $str .= $vv . $kk . ', ';
+                    $str .= $vv . $kk . ' & ';
                 }
             } else {
-                $str .= $val.', ';
+                $str .= $val.' & ';
             }
         }
-        $str = rtrim($str,', ');
+        $str = rtrim($str,' & ');
     } else {
         $str = $arr;
     }
