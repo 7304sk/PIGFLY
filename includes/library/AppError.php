@@ -6,6 +6,8 @@ class AppError {
         2 =>    'The referer is invalid.',
         3 =>    'The token is incorrect.',
         4 =>    'There are function references from invalid locations.',
+        5 =>    'Failed to create directory for log file output. Please create the directory manually.',
+        6 =>    'Failed to write log csv.',
     ];
 
     private function __construct() {}

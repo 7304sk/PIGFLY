@@ -1,12 +1,20 @@
 <?php
 
 class MailFacade {
-    public $to_user;
-    public $to_admin;
+    private $mf_user;
+    private $mf_admin;
 
     /** メールファサードを取得 */
     public function __construct() {
-        $this->to_user = require_once APP_PATH . 'mail/to_user.php';
-        $this->to_admin = require_once APP_PATH . 'mail/to_admin.php';
+        $this->mf_user = require_once APP_PATH . 'mail/to_user.php';
+        $this->mf_admin = require_once APP_PATH . 'mail/to_admin.php';
+    }
+
+    public function to_user() {
+        return $this->mf_user;
+    }
+
+    public function to_admin() {
+        return $this->mf_admin;
     }
 }
