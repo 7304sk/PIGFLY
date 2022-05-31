@@ -32,15 +32,22 @@ class LogFile {
         try {
             $res = fopen( $this->output, $open_mode );
             $csv_header = array_merge( ['meta_datetime'], $log_output_items );
+            mb_convert_variables( 'SJIS', 'UTF-8', $csv_header );
             if ( $open_mode === 'w' ) {
                 fputcsv( $res, $csv_header );
             }
-            $write_values = ['meta_datetime' => date("Y-m-d H:i:s")];
-            foreach ( $values as $key => $value ) {
-                if ( in_array( $key, $log_output_items ) ) {
-                    $str = mb_convert_variables( $value, 'SJIS', 'UTF-8' );
-                    $write_values = array_merge( $write_values, [$key => $str] );
+            $write_values = ['__datetime__' => date("Y-m-d H:i:s")];
+            foreach( $log_output_items as $item ) {
+                $item_flg = false;
+                foreach ( $values as $key => $value ) {
+                    if ( $key === $item ) {
+                        $str = mb_convert_encoding( $value, 'SJIS', 'UTF-8' );
+                        $write_values = array_merge( $write_values, [$key => $str] );
+                        $item_flg = true;
+                        break;
+                    }
                 }
+                if ( !$item_flg ) $write_values = array_merge( $write_values, [$item => ''] );
             }
             fputcsv( $res, $write_values );
             fclose( $res );

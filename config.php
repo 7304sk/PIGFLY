@@ -46,7 +46,7 @@ $page_thanks = 'https://www.google.com/';
 $app_domain = [];
 
 /** 出力するログファイル（相対パスと絶対パスどちらも可能） */
-$log_output_file = './mail_log.csv';
+$log_output_file = './log/log.csv';
 
 /** ログファイルに出力するinput項目 */
 $log_output_items = ['Email', '氏名', '件名', '内容'];

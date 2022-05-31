@@ -150,7 +150,7 @@ class Input {
                         $ext_allow[] = strtoupper( $ext );
                     }
                     if ( ! @in_array( $fileData[ 'extension' ], $ext_allow ) ) {
-                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>は添付を許可されていません。<br>添付可能なファイルの種類（拡張子）は <span class="bpld">[" . implode( ', ', $file_extensions ) . "]</span> です。' );
+                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>は添付を許可されていません。<br>添付可能なファイルの種類（拡張子）は <span class="bold">[' . implode( ', ', $file_extensions ) . ']</span> です。' );
                     }
                     /** アップロード容量制限 */
                     $size = filesize( $val[ 'tmp_name' ] );
