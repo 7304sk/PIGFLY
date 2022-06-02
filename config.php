@@ -23,7 +23,7 @@ $form_name = 'PIGFLY メールフォーム';
 /** 管理者のメールアドレス（受信先） */
 $admin_email = 'you@your.adress';
 
-/** 
+/**
  * サーバのメールアドレス（メールの送信元）
  * 管理者の受信用の他に、管理者宛・利用者の内容確認の両方のメールの送信元となるアドレスが必要。
  * 空欄の場合、 no-reply@{あなたのドメイン} というアドレスが送信元となる。これで問題がなければこのまま。
@@ -39,8 +39,8 @@ $email_retype = 'Email（確認用）';
 /** 必須項目にするinputのname値（$Email, $Email_retype のものは書かない） */
 $mandatory = ['氏名', '件名', '内容'];
 
-/** 送信成功時のthanksページURL */
-$page_thanks = 'https://www.google.com/';
+/** 送信成功時のthanksページURL（空白の場合ドメイントップにリダイレクトする） */
+$page_thanks = '';
 
 /** リファラチェック用、フォームを設置しているドメインがこのアプリと違うドメインにある場合に追加する */
 $app_domain = [];
@@ -52,7 +52,7 @@ $log_output_file = './log/log.csv';
 $log_output_items = ['Email', '氏名', '件名', '内容'];
 
 /** アップロードを許可する拡張子 */
-$file_extensions = [ 'pdf','doc','docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'gif' ];
+$file_extensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'gif'];
 
 /** アップロードファイルのサイズ上限（KB） */
 $file_max = 3000;
