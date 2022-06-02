@@ -31,7 +31,7 @@ class LogFile {
         $open_mode = file_exists( $this->output ) ? 'a' : 'w';
         try {
             $res = fopen( $this->output, $open_mode );
-            $csv_header = array_merge( ['meta_datetime'], $log_output_items );
+            $csv_header = array_merge( ['__datetime__'], $log_output_items );
             mb_convert_variables( 'SJIS', 'UTF-8', $csv_header );
             if ( $open_mode === 'w' ) {
                 fputcsv( $res, $csv_header );
