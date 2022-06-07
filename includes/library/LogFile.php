@@ -5,26 +5,8 @@ class LogFile {
     public $to_admin;
 
     public function __construct( $output ) {
-        $output_ = '';
-        if ( mb_substr($output, 0, 1) === '/' ) {
-            $output_ = $output;
-        } elseif ( mb_substr($output, 0, 2) === './' ) {
-            $output_ = APP_PATH . mb_substr($output, 2);
-        } else {
-            $output_ = APP_PATH . $output;
-        }
-        $this->output = $output_;
-
-        /** ディレクトリの存在確認、なければ作成 */
-        $output_dir = dirname($output_);
-        if ( !file_exists($output_dir) ) {
-            try {
-                mkdir( $output_dir, 0644 );
-                chmod( $output_dir, 0644 );
-            } catch( Exception $e ) {
-                AppError::id( 5 );
-            }
-        }
+        $this->output = $output;
+        if ( !file_exists( dirname( $output ) ) ) AppError::id( 5 );
     }
 
     public function write( $log_output_items, $values ) {
