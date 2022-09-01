@@ -17,4 +17,4 @@ if ( $name == '内容' ) {
         addError( $message );
     }
 }
-*/s
+*/
