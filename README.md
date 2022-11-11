@@ -9,6 +9,7 @@ PHP を用いたファイル添付機能付き汎用メールフォームです�
 * 確認画面
 * 送信テスト
 * 日本語の設定によるメールフォーム送信
+* 日本語モード・英語モードの切り替え
 * ファイルの添付
 * 送信内容を自動的に CSV ファイルへ集積
 
@@ -54,5 +55,6 @@ Apache や Nginx といったミドルウェアでアクセス不可とする設
 "PIGFLY" is under [MIT license](https://opensource.org/licenses/MIT).
 
 ## Author
-* shoalwave
+* Shoalwave
+* Website: [shoalwave.net](https://shoalwave.net)
 * E-mail: shoalwave.dev@gmail.com
