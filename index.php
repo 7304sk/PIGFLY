@@ -28,7 +28,7 @@ if( $mode_confirm ) {
     session_start();
 }
 $_POST = isset( $_POST ) ? clearNull( $_POST ) : array();
-$input = new Input( $_POST );
+$input = new Input( $_POST, $mode_jp );
 $input->check();
 if( $input->error() ) {
     /** エラー画面出力 */

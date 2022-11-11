@@ -7,9 +7,16 @@ class Input {
     private $confirmed = false;
     private $file = array();
     private $checking = false;
+    private $lang_jp = false;
 
-    public function __construct( $arr ) {
+    public function __construct( $arr, $mode_jp = true ) {
         $this->val = $arr;
+        $this->lang_jp = $mode_jp;
+    }
+
+    /** lang_jp の getter */
+    public function isJP() {
+        return $this->lang_jp;
     }
 
     public function addErrorMessage( $str ) {
@@ -74,10 +81,18 @@ class Input {
                 if( $key === $mandatory_key ) {
                     if( is_array( $val ) ) {
                         if( implodeVal( $val ) == '' ) {
-                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
+                            if ( $this->isJP() ) {
+                                $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
+                            } else {
+                                $this->addErrorMessage( '<span class="errmsg">[' . hsc( $key ) . ']</span> is required field.' );
+                            }
                         }
                     } elseif( $val === '' ) {
-                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
+                        if ( $this->isJP() ) {
+                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
+                        } else {
+                            $this->addErrorMessage( '<span class="errmsg">[' . hsc( $key ) . ']</span> is required field.' );
+                        }
                     }
                     $exist_flag = true;
                     break;
@@ -87,7 +102,11 @@ class Input {
                 foreach( $_FILES as $key => $val ) {
                     if( $key === $mandatory_key ) {
                         if( empty( $val[ 'tmp_name' ] ) ) {
-                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
+                            if ( $this->isJP() ) {
+                                $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $key ) . ' 】</span>は必須項目です。' );
+                            } else {
+                                $this->addErrorMessage( '<span class="errmsg">[' . hsc( $key ) . ']</span> is required field.' );
+                            }
                         }
                         $exist_flag = true;
                         break;
@@ -95,7 +114,11 @@ class Input {
                 }
             }
             if( ! $exist_flag ) {
-                $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $mandatory_key ) . ' 】</span>が入力されていません。' );
+                if ( $this->isJP() ) {
+                    $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $mandatory_key ) . ' 】</span>が入力されていません。' );
+                } else {
+                    $this->addErrorMessage( '<span class="errmsg">[' . hsc( $key ) . ']</span> is not entered.' );
+                }
             }
         }
     }
@@ -105,13 +128,21 @@ class Input {
         global $mode_email_retype, $user_email, $email_retype;
         if( $mode_email_retype && ( $this->val[ $user_email ] !== '' ) && ( $this->val[ $email_retype ] !== '' ) && ( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) ) {
             if( $this->val[ $user_email ] !== $this->val[ $email_retype ] ) {
-                $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $user_email ) . ' 】</span>と<span class="errmsg">【 ' . hsc( $email_retype ) . ' 】</span>の値が一致しません。' );
+                if ( $this->isJP() ) {
+                    $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $user_email ) . ' 】</span>と<span class="errmsg">【 ' . hsc( $email_retype ) . ' 】</span>の値が一致しません。' );
+                } else {
+                    $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $user_email ) . ' 】</span> and <span class="errmsg">【 ' . hsc( $email_retype ) . ' 】</span> values do not match.' );
+                }
             }
         }
         if( $this->val[ $user_email ] !== '' ) {
             $reg = ( preg_match( '/^[\.!#%&\-_0-9a-zA-Z\?\/\+]+\@[!#%&\-_0-9a-zA-Z]+(\.[!#%&\-_0-9a-zA-Z]+)+$/', $this->val[ $user_email ] ) && count( explode( '@', $this->val[ $user_email ] ) ) === 2 ) ? true : false;
             if( ! $reg ) {
-                $this->addErrorMessage( '<span class="errmsg">' . hsc( $this->val[ $user_email ] ) . '</span> は正しいメールアドレスの形式ではありません。' );
+                if ( $this->isJP() ) {
+                    $this->addErrorMessage( '<span class="errmsg">' . hsc( $this->val[ $user_email ] ) . '</span> は正しいメールアドレスの形式ではありません。' );
+                } else {
+                    $this->addErrorMessage( '<span class="errmsg">' . hsc( $this->val[ $user_email ] ) . '</span> is not the correct form of e-mail address.' );
+                }
             }
         }
     }
@@ -121,7 +152,11 @@ class Input {
         global $file_extensions, $file_max, $mode_confirm, $mode_upload_file;
         if( ! empty( $_FILES ) ) {
             if ( ! $mode_upload_file ) {
-                $this->addErrorMessage( 'このフォームでファイルのアップロードは許可されていません。' );
+                if ( $this->isJP() ) {
+                    $this->addErrorMessage( 'このフォームでファイルのアップロードは許可されていません。' );
+                } else {
+                    $this->addErrorMessage( 'Uploading files is not allowed on this form.' );
+                }
                 return;
             }
             foreach( $_FILES as $key => $val ) {
@@ -129,11 +164,23 @@ class Input {
                 /** phpiniの設定によるUPLOAD_ERRのチェック */
                 if( $val[ 'error' ] != UPLOAD_ERR_OK && $val[ 'error' ] !== 4 ) {
                     if ( $val[ 'error' ] === 1 || $val[ 'error' ] === 2 ) {
-                        $this->addErrorMessage( $val[ 'name' ] . 'はファイルの容量が大きすぎます。' );
+                        if ( $this->isJP() ) {
+                            $this->addErrorMessage( $val[ 'name' ] . 'はファイルの容量が大きすぎます。' );
+                        } else {
+                            $this->addErrorMessage( $val[ 'name' ] . ' is too large file.' );
+                        }
                     } else if ( $val[ 'error' ] === 3 ) {
-                        $this->addErrorMessage( $val[ 'name' ] . 'は一部しかアップロードされていません。' );
+                        if ( $this->isJP() ) {
+                            $this->addErrorMessage( $val[ 'name' ] . 'は一部しかアップロードされていません。' );
+                        } else {
+                            $this->addErrorMessage( $val[ 'name' ] . ' is only partially uploaded.' );
+                        }
                     } else {
-                        $this->addErrorMessage( $val[ 'name' ] . '原因不明のエラーです。' );
+                        if ( $this->isJP() ) {
+                            $this->addErrorMessage( $val[ 'name' ] . ' - 原因不明のエラーです。' );
+                        } else {
+                            $this->addErrorMessage( $val[ 'name' ] . ' - Unknown error.' );
+                        }
                     }
                 }
                 /** config.php によるチェック */
@@ -150,12 +197,20 @@ class Input {
                         $ext_allow[] = strtoupper( $ext );
                     }
                     if ( ! @in_array( $fileData[ 'extension' ], $ext_allow ) ) {
-                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>は添付を許可されていません。<br>添付可能なファイルの種類（拡張子）は <span class="bold">[' . implode( ', ', $file_extensions ) . ']</span> です。' );
+                        if ( $this->isJP() ) {
+                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>は添付を許可されていません。<br>添付可能なファイルの種類（拡張子）は <span class="bold">[' . implode( ', ', $file_extensions ) . ']</span> です。' );
+                        } else {
+                            $this->addErrorMessage( '<span class="errmsg">[' . hsc( $fileData[ 'name' ] ) . ']</span> is not allowed to attach.<br>Attachment allowed file type (extension) is <span class="bold">[' . implode( ', ', $file_extensions ) . ']</span>.' );
+                        }
                     }
                     /** アップロード容量制限 */
                     $size = filesize( $val[ 'tmp_name' ] );
                     if ( ($size / 1024) > $file_max ) {
-                        $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>はファイルの容量が大きすぎます。（上限'. $file_max . 'KB）' );
+                        if ( $this->isJP() ) {
+                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span>はファイルの容量が大きすぎます。（上限'. $file_max . 'KB）' );
+                        } else {
+                            $this->addErrorMessage( '<span class="errmsg">【 ' . hsc( $fileData[ 'name' ] ) . ' 】</span> is too large file. (MAX: '. $file_max . 'KB)' );
+                        }
                     }
 
                     $fp = fopen( $fileData[ 'tmp' ], 'r' );

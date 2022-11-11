@@ -12,6 +12,9 @@ $mode_upload_file = false;
 /** ログファイルの出力 */
 $mode_log = false;
 
+/** 日本語モード(オフにするとエラーメッセージなどの出力が英語になる) */
+$mode_jp = true;
+
 /** テストモード（メンテナンス用） */
 $mode_test = false;
 /* <<<<<<<<<< Mode switches <<<<<<<<<< */
