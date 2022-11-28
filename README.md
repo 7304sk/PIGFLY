@@ -19,7 +19,8 @@ PIGFLY ディレクトリに対して、任意の HTML から POST 送信する�
 セキュリティ上デフォルトでは PIGFLY が設置されているのと同一のドメインからの送信のみ受け付けます（config で追加可能）。  
 フォームで送信されたものをすべて送信します。name 属性の値は日本語で設定可能です。  
 ファイル添付を行う場合、HTML フォームに enctype="multipart/form-data" 属性を設定してください。  
-入力内容に独自に制限を設けたい場合、validations.phpを利用できます（処理は php で記述する必要があります。）
+入力内容に独自に制限を設けたい場合、validations.php を利用できます（処理は php で記述する必要があります。） 
+入力内容の値をフォーム側で独自に加工する必要がある場合（input\[type="date"]で入力した値の書式を変更したい等）、preprocess.php を利用することで値を上書きすることができます。
 
 ## Setting
 config.php で全体設定を行えます。  
@@ -52,7 +53,7 @@ Apache や Nginx といったミドルウェアでアクセス不可とする設
 準備中
 
 ## License
-"PIGFLY" is under [MIT license](https://opensource.org/licenses/MIT).
+"PIGFLY" is under [MIT license](https://github.com/7304sk/PIGFLY/blob/main/LICENSE).
 
 ## Author
 * Shoalwave

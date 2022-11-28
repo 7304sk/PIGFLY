@@ -54,3 +54,9 @@ function addError( $message ) {
     global $input;
     $input->addErrorMessage( $message );
 }
+
+/** preprocess.php 用 入力値のアップデート関数 */
+function post_update( $name, $value ) {
+    global $input;
+    $input->post_update( $name, $value );
+}

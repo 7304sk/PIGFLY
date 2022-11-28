@@ -7,6 +7,7 @@ class Input {
     private $confirmed = false;
     private $file = array();
     private $checking = false;
+    private $preprocessing = false;
     private $lang_jp = false;
 
     public function __construct( $arr, $mode_jp = true ) {
@@ -17,6 +18,29 @@ class Input {
     /** lang_jp の getter */
     public function isJP() {
         return $this->lang_jp;
+    }
+
+    public function preprocess() {
+        $this->preprocessing = true;
+        $this->tokenCheck();
+        if( ! $this->confirmed() ) {
+            foreach( $this->val as $name => $value ) {
+                require APP_PATH . 'preprocess.php';
+            }
+        }
+        $this->preprocessing = false;
+    }
+
+    public function post_update( $name, $value ) {
+        if ( $this->preprocessing ) {
+            if( array_key_exists( $name, $this->val ) ) {
+                $this->val[$name] = $value;
+            } else {
+                AppError::id( 7 );
+            }
+        } else {
+            AppError::id( 4 );
+        }
     }
 
     public function addErrorMessage( $str ) {
@@ -30,7 +54,6 @@ class Input {
     /** The capsule to execute all check functions. */
     public function check() {
         $this->checking = true;
-        $this->tokenCheck();
         $this->requireCheck();
         $this->mailCheck();
         $this->fileCheck();

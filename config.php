@@ -1,4 +1,14 @@
 <?php
+/************************************
+
+    PIGFLY
+    - Version : 1.5.0
+
+    Copyright 2021 shoalwave
+    https://github.com/7304sk/PIGFLY/blob/main/LICENSE
+
+************************************/
+
 /* >>>>>>>>>> Mode switches >>>>>>>>>> */
 /** 確認画面の有無 */
 $mode_confirm = true;

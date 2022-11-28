@@ -29,6 +29,7 @@ if( $mode_confirm ) {
 }
 $_POST = isset( $_POST ) ? clearNull( $_POST ) : array();
 $input = new Input( $_POST, $mode_jp );
+$input->preprocess();
 $input->check();
 if( $input->error() ) {
     /** エラー画面出力 */
