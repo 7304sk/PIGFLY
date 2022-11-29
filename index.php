@@ -1,4 +1,7 @@
 <?php
+/** クリックジャッキング対策  */
+header('X-FRAME-OPTIONS: SAMEORIGIN');
+
 /** APP_PATH, APP_URL の定義  */
 define( 'APP_PATH', __DIR__ . '/' );
 define( 'APP_URL', ( ( ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' ) ) ? 'https://' : 'http://' ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ] );
