@@ -13,7 +13,7 @@
 
 
 /* 例：input[type="date"] で入力されている【日付】を日本語書式に直したい場合
-if ( $name == '日付' ) {
+if ( $name == '日付' && ! empty( $value ) ) {
     $dt = strtotime( $value );
     post_update( $name, date( 'Y年n月j日', $dt ) );
 }
