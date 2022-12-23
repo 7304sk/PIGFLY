@@ -4,11 +4,12 @@ require_once APP_PATH . 'config.php';
 
 /** 設定によるその他設定の定義・上書き */
 if( empty( $app_url ) ) {
-    define( 'APP_URL', ( ( ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' ) ) ? 'https://' : 'http://' ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ] );
+    $app_url = ( ( ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' ) ) ? 'https://' : 'http://' ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];
+    define( 'APP_URL', explode( 'index.php', $app_url )[0] );
 } else {
     define( 'APP_URL', $app_url );
-    unset( $app_url );
 }
+unset( $app_url );
 array_push( $mandatory, $user_email );
 if( $mode_email_retype && ! empty( $email_retype ) ) array_push( $mandatory, $email_retype );
 if( $mode_test ) ini_set('display_errors', 1);
