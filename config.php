@@ -20,6 +20,8 @@ $mode_upload_file = false;
 $mode_log = false;
 /** 日本語モード(オフにするとエラーメッセージなどの出力が英語になる) */
 $mode_jp = true;
+/** reCAPTCHA v3 認証の有無 */
+$mode_recaptcha = false;
 /** テストモード（メンテナンス用） */
 $mode_test = false;
 /* <<<<<<<<<< Mode switches <<<<<<<<<< */
@@ -56,6 +58,14 @@ $log_output_items = ['Email', '氏名', '件名', '内容'];
 $file_extensions = ['pdf', 'doc', 'docx', 'xls', 'xlsx', 'jpg', 'jpeg', 'png', 'gif'];
 /** アップロードファイルのサイズ上限（KB） */
 $file_max = 3000;
+
+/**
+ * reCAPTCHA v3 認証の設定
+ */
+/** サイトキー */
+$recaptcha_site_key = '';
+/** シークレットキー */
+$recaptcha_secret_key = '';
 /* <<<<<<<<<< Unique variables <<<<<<<<<< */
 
 /* >>>>>>>>>> Bug fix >>>>>>>>>> */
