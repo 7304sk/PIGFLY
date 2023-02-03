@@ -36,7 +36,7 @@ if( $input->error() ) {
         mb_internal_encoding( 'UTF-8' );
         $mail_facade = new MailFacade;
         $send_file = ( ! empty( $_SESSION[ 'file' ] ) ) ? $_SESSION[ 'file' ] : ( ( ! empty( $input->file() ) ) ? $input->file() : array() );
-        $to_user = new Mail( $admin_email, $input->value( $user_email ), $input->value(), $mail_facade->to_user() );
+        $to_user = new Mail( '', $input->value( $user_email ), $input->value(), $mail_facade->to_user() );
         $to_admin = new Mail( $input->value( $user_email ), $admin_email, $input->value(), $mail_facade->to_admin(), $send_file );
         if( session_status() === PHP_SESSION_ACTIVE ) {
             $_SESSION = array();

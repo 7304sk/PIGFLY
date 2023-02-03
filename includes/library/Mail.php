@@ -97,7 +97,7 @@ class Mail {
         $str .= 'From: ' . mb_encode_mimeheader( clearRN( $form_name ), 'ISO-2022-JP-MS', 'UTF-8' ) . ' <' . mb_encode_mimeheader( clearRN( $mail_sender ), 'ISO-2022-JP-MS', 'UTF-8' ) . ">\n";
         if( ! empty( $this->facade->cc ) ) $str .= "Cc: " . mb_encode_mimeheader( clearRN( $this->facade->cc ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
         if( ! empty( $this->facade->bcc ) ) $str .= "Bcc: " . mb_encode_mimeheader( clearRN( $this->facade->bcc ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
-        $str .= "Reply-To: " . mb_encode_mimeheader( clearRN( $this->from ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
+        if( !empty( $this->from ) ) $str .= "Reply-To: " . mb_encode_mimeheader( clearRN( $this->from ), 'ISO-2022-JP-MS', 'UTF-8' ) . "\n";
         $str .= "X-Mailer: PHP/" . phpversion() . "\n";
         $str .= "Content-Transfer-Encoding: 7bit\n";
         if ( ! empty( $this->file ) ) {
