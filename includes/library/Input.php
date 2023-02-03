@@ -21,6 +21,7 @@ class Input {
     }
 
     public function preprocess() {
+        global $mode_recaptcha, $recaptcha_secret_key;
         $this->preprocessing = true;
         $this->tokenCheck();
         if( ! $this->confirmed() ) {
