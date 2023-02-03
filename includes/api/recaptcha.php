@@ -7,13 +7,17 @@ recaptcha_script.src = 'https://www.google.com/recaptcha/api.js?render=${recaptc
 document.body.appendChild(script);
 
 window.addEventListener('DOMContentLoaded',() => {
-    grecaptcha.ready(function () {
-        grecaptcha.execute('${recaptcha_site_key}', {action: 'homepage'}).then(function(token) {
-            var recaptchaResponse = document.getElementById('recaptchaResponse');
-            recaptchaResponse.value = token;
+    const PIGFLY_form = document.querySelector('#PIGFLY');
+    PIGFLY_form.addEventLstener('submit', e => {
+        e.preventDefault();
+        grecaptcha.ready(function() {
+            grecaptcha.execute('${recaptcha_site_key}', {action: 'submit'}).then(function(token) {
+                PIGFLY_form.submit();
+            });
         });
     });
 });
 EOT;
 
 header('Content-Type: application/x-javascript; charset=utf-8');
+echo $script;
