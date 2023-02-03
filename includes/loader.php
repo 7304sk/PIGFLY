@@ -2,6 +2,8 @@
 /** config.php の読み込み */
 require_once APP_PATH . 'config.php';
 
+$mode_spa = false; // 仮：v2.0.0 で SPA モードを実装する予定の為
+
 /** 設定によるその他設定の定義・上書き */
 if( empty( $app_url ) ) {
     $app_url = ( ( ( ! empty( $_SERVER[ 'HTTPS' ] ) && $_SERVER[ 'HTTPS' ] !== 'off' ) ) ? 'https://' : 'http://' ) . $_SERVER[ 'HTTP_HOST' ] . $_SERVER[ 'REQUEST_URI' ];

@@ -21,9 +21,25 @@ class Input {
     }
 
     public function preprocess() {
+        global $mode_recaptcha, $recaptcha_secret_key;
         $this->preprocessing = true;
         $this->tokenCheck();
         if( ! $this->confirmed() ) {
+            // reCAPTCHA
+            if( $mode_recaptcha ) {
+                if(isset( $this->val[ 'recaptchaResponse' ] ) && !empty( $this->val[ 'recaptchaResponse' ] ) ) {
+                    $verifyResponse = file_get_contents( 'https://www.google.com/recaptcha/api/siteverify?secret=' . $recaptcha_secret_key . '&response=' . $this->val[ 'recaptchaResponse' ]);
+                    $reCAPTCHA = json_decode( $verifyResponse );
+                    if ($reCAPTCHA->success) {
+                        unset( $this->val[ 'recaptchaResponse' ] );
+                    } else {
+                        AppError::id( 9 );
+                    }
+                } else {
+                    AppError::id( 8 );
+                }
+            }
+            // preprocess
             foreach( $this->val as $name => $value ) {
                 require APP_PATH . 'preprocess.php';
             }
