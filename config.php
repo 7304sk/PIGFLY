@@ -2,7 +2,7 @@
 /************************************
 
     PIGFLY
-    - Version : 1.5.2
+    - Version : 1.6.0
 
     Copyright 2021 shoalwave
     https://github.com/7304sk/PIGFLY/blob/main/LICENSE
