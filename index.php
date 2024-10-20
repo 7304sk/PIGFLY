@@ -51,8 +51,12 @@ if( $input->error() ) {
         if( $mode_test ) {
             Display::view( APP_PATH . 'view/result.php' );
         } else {
-            $to_user->send();
-            $to_admin->send();
+            if( $mode_mail_to_user ) {
+                $to_user->send();
+            }
+            if( $mode_mail_to_admin ) {
+                $to_admin->send();
+            }
             header( "location: " . $page_thanks, true, 301 );
             exit;
         }

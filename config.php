@@ -2,7 +2,7 @@
 /************************************
 
     PIGFLY
-    - Version : 1.6.0
+    - Version : 1.7.0
 
     Copyright 2021 shoalwave
     https://github.com/7304sk/PIGFLY/blob/main/LICENSE
@@ -16,6 +16,9 @@ $mode_confirm = true;
 $mode_email_retype = true;
 /** ファイルアップロードの許可 */
 $mode_upload_file = false;
+/** メール送信の有無 */
+$mode_mail_to_admin = true; // 管理者へメールを送信するか
+$mode_mail_to_user = false; // 入力者へ自動返信メールを送信するか
 /** ログファイルの出力 */
 $mode_log = false;
 /** 日本語モード(オフにするとエラーメッセージなどの出力が英語になる) */
